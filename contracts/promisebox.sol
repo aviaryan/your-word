@@ -16,7 +16,6 @@ contract PromiseBox {
 
     // a map that stores all the words
     mapping (uint => Word) public words;
-    // Word[] public words;
 
     // treasure address
     address private treasure;
@@ -24,7 +23,11 @@ contract PromiseBox {
     // identifier for words
     uint private counter;
 
-    uint constant min_bet = 10**15;  // 0.001 eth
+    // constants
+    // 0.001 eth
+    uint constant min_bet = 10**15;
+    // 0.001 eth
+    uint constant nick_price = 10**15;
 
     // constructor, saves private information for the contract
     constructor(address treasure_) public {
@@ -61,8 +64,15 @@ contract PromiseBox {
     }
 
     /// Set a nickname for yourself
-    function setNick(string name) public {
+    function setNick(string name) public payable {
+        require(msg.value >= nick_price, "Insufficient fees for setting nick");
         names[msg.sender] = name;
+        treasure.transfer(msg.value);
+    }
+
+    /// Return nickname given the address
+    function getNickByAddress(address ad) public view returns(string) {
+        return names[ad];
     }
 
     /// Returns word by a given ID
