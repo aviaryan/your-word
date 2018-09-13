@@ -1,6 +1,7 @@
 # My Word
 
 Cement your promises in blockchain.
+If you fail, you lose 20%, otherwise you get it back.
 
 
 ## Tech

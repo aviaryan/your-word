@@ -1,28 +1,34 @@
 Web3 = require('web3')
 contract = require('./compile.js')
 
-web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"))
 
 abiDefinition = JSON.parse(contract.interface)
-WordsContract = new web3.eth.Contract(abiDefinition)
+WordsContract = new web3.eth.Contract(abiDefinition, null, {
+	gas: 1500000,
+	// gasPrice same as Ganache node
+	gasPrice: '20000000000'
+})
 
 byteCode = contract.bytecode
 
 web3.eth.getAccounts().then(accounts => {
-	walletAddress = accounts[0]
-	console.log(walletAddress)
+	escrow = accounts[0]
+	treasure = accounts[1]
+	someUser = accounts[2]
+	console.log(escrow, treasure, someUser)
 
 	WordsContract.deploy({
-		data: byteCode
+		data: byteCode,
+		arguments: [escrow, treasure]
 	}).send({
-		from: walletAddress,
-		gas: 4700000
+		from: escrow,
 	}).then((deployedContract) => {
-		deployedContract.methods.saveSomeonesWord(web3.utils.asciiToHex('Luffy'), 'I am the man who will become the king of the pirates').send({
-			from: walletAddress
+		deployedContract.methods.addWord('I am the man who will become the king of the pirates').send({
+			from: someUser,
 		}).then(receipt => {
 			console.log(receipt)
-			deployedContract.methods.getWordBy(web3.utils.asciiToHex('Luffy')).call().then(res => {
+			deployedContract.methods.getWordById(0).call().then(res => {
 				console.log(res)
 			})
 		})
