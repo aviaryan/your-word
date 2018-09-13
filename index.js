@@ -13,23 +13,33 @@ WordsContract = new web3.eth.Contract(abiDefinition, null, {
 byteCode = contract.bytecode
 
 web3.eth.getAccounts().then(accounts => {
-	escrow = accounts[0]
-	treasure = accounts[1]
-	someUser = accounts[2]
-	console.log(escrow, treasure, someUser)
+	treasure = accounts[0]
+	someUser = accounts[1]
+	console.log(treasure, someUser)
 
 	WordsContract.deploy({
 		data: byteCode,
-		arguments: [escrow, treasure]
+		arguments: [treasure]
 	}).send({
-		from: escrow,
+		from: treasure,
 	}).then((deployedContract) => {
 		deployedContract.methods.addWord('I am the man who will become the king of the pirates').send({
 			from: someUser,
+			value: '1000000000000000000'
 		}).then(receipt => {
 			console.log(receipt)
 			deployedContract.methods.getWordById(0).call().then(res => {
 				console.log(res)
+				deployedContract.methods.resolveWord(0, false).send({
+					from: someUser
+				}).then(receipt => {
+					deployedContract.methods.getContractBalance().call().then(res => {
+						console.log('balance new:' + res)
+					})
+				})
+			})
+			deployedContract.methods.getContractBalance().call().then(res => {
+				console.log('balance:' + res)
 			})
 		})
 	})

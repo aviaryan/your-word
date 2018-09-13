@@ -5,6 +5,7 @@ contract PromiseBox {
     struct Word {
         string text;
         // uint timestamp;
+        uint bet;
         address owner;
         bool resolved;
         bool verdict;
@@ -17,29 +18,30 @@ contract PromiseBox {
     mapping (uint => Word) public words;
     // Word[] public words;
 
-    // important addresses
-    address private escrow;
+    // treasure address
     address private treasure;
 
     // identifier for words
     uint private counter;
 
+    uint constant min_bet = 10**15;  // 0.001 eth
+
     // constructor, saves private information for the contract
-    constructor(address escrow_, address treasure_) public {
-        escrow = escrow_;
+    constructor(address treasure_) public {
         treasure = treasure_;
         counter = 0;
     }
 
     /// Save your word to the blockchain
-    function addWord(string text) public {
+    function addWord(string text) public payable {
+        require(msg.value >= min_bet, "Bet should be more than 0.001 eth");
         words[getID()] = Word({
             text: text,
+            bet: msg.value,
             owner: msg.sender,
             resolved: false,
             verdict: false
         });
-        // TODO: get value for transaction
     }
 
     /// Resolve a word status
@@ -49,6 +51,18 @@ contract PromiseBox {
         words[id].resolved = true;
         words[id].verdict = verdict;
         // TODO: return back value
+        if (!verdict) {
+            msg.sender.transfer(words[id].bet / 100 * 20);
+            treasure.transfer(words[id].bet / 100 * 80);
+        } else {
+            msg.sender.transfer(words[id].bet / 100 * 99);
+            treasure.transfer(words[id].bet / 100 * 1);
+        }
+    }
+
+    /// Set a nickname for yourself
+    function setNick(string name) public {
+        names[msg.sender] = name;
     }
 
     /// Returns word by a given ID
@@ -60,6 +74,11 @@ contract PromiseBox {
     /// Returns the total number of words saved in the contract
     function getTotalWords() public view returns(uint) {
         return counter;
+    }
+
+    /// Returns total balance of Smart Contract
+    function getContractBalance() public view returns(uint256) {
+        return address(this).balance;
     }
 
     // private functions
