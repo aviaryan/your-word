@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 contract PromiseBox {
-    // this struct represents each word
+    // this struct represents each Word
     struct Word {
         string text;
         // uint timestamp;
