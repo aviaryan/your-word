@@ -4,12 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"test": "node test.js"
+	"test": "node test.js",
+	"start": "parcel web/static/index.html",
+	"build": "parcel build web/index.js",
+	"deploy": "surge dist/"
   },
   "author": "Avi Aryan",
   "license": "ISC",
   "dependencies": {
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
     "solc": "^0.4.24",
     "web3": "^1.0.0-beta.36"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.9.7"
   }
 }
