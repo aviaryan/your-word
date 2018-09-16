@@ -4,21 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"start": "parcel web/static/index.html",
-	"build": "parcel build web/index.js",
-	"test": "node tests/test.js",
-	"test:net": "TESTNET=true node tests/test.js",
-	"deploy:web": "surge dist/",
-	"deploy:testnet": "TESTNET=true node deploy.js",
-	"deploy:local": "node deploy.js"
+    "start": "parcel web/static/index.html",
+    "build": "parcel build web/index.js",
+    "deploy:web": "surge dist/",
+    "test": "node tests/test.js",
+    "test:net": "TESTNET=true node tests/test.js",
+    "deploy:testnet": "TESTNET=true node deploy.js",
+    "deploy:local": "node deploy.js"
   },
   "author": "Avi Aryan",
   "license": "ISC",
   "dependencies": {
+    "autoprefixer": "^9.1.5",
+    "postcss-modules": "^1.3.2",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
+    "react-router-dom": "^4.3.1",
     "solc": "^0.4.24",
     "truffle-privatekey-provider": "^0.1.0",
+    "uikit": "^3.0.0-rc.16",
     "web3": "^1.0.0-beta.36"
   },
   "devDependencies": {

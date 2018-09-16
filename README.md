@@ -47,3 +47,4 @@ So I deployed my own network using ganache and a small server.
 These articles helped me to make this project.
 
 * [Getting started with Solidity DApps](https://hackernoon.com/a-beginners-guide-to-blockchain-programming-4913d16eae31)
+* [Using an Ethereum testnet](https://medium.com/compound-finance/the-beginners-guide-to-using-an-ethereum-test-network-95bbbc85fc1d)
