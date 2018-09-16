@@ -7,11 +7,6 @@ import App from './App.js';
 // import smcApp from './reducers/index.reducer'
 // import { Provider } from 'react-redux'
 
-// uikit
-import UIkit from 'uikit'
-import Icons from 'uikit/dist/js/uikit-icons'
-UIkit.use(Icons)
-
 // let store = createStore(smcApp)
 
 ReactDOM.render(
