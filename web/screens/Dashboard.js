@@ -34,11 +34,11 @@ export default class Dashboard extends Component {
 			console.log(rec.transactionHash)
 			document.getElementById('text').value = ''
 			document.getElementById('value').value = ''
-			this.fetchWords()
+			this.updatePage()
 		}).catch(console.error)
 	}
 
-	wordResolve() {
+	updatePage() {
 		this.fetchWords()
 		this.props.updated()
 	}
@@ -53,7 +53,7 @@ export default class Dashboard extends Component {
 				this.props.contract.methods.getWordById(i).call().then(res => {
 					wordMap[i] = <Word key={i} text={res[0]} owner={res[1]} bet={res[2]}
 						contract={this.props.contract} account={this.props.account}
-						resolved={res[3]} verdict={res[4]} id_={i} updated={this.wordResolve.bind(this)} />
+						resolved={res[3]} verdict={res[4]} id_={i} updated={this.updatePage.bind(this)} />
 				}).catch(console.error).finally(() => {
 					// very bad approach I know but async/await was not working
 					let words = []
