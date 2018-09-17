@@ -32,7 +32,7 @@ export default class Word extends Component {
 						<b>I will</b> <span>{this.props.text}</span>
 					</p>
 					<p>
-						by <u>{this.state.nick}</u> for {(this.props.bet / 1e18)} eth.
+						by <u>{this.state.nick}</u> for {(this.props.bet / 1e18)} eth
 					</p>
 				</div>
 				<div className={styles.status}>

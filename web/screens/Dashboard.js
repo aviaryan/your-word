@@ -47,15 +47,23 @@ export default class Dashboard extends Component {
 		if (!this.props.contract) {
 			return
 		}
-		let words = []
+		let wordMap = {}
 		this.props.contract.methods.getTotalWords().call().then(num => {
 			for (let i=num-1; i>= 0; i--) {
 				this.props.contract.methods.getWordById(i).call().then(res => {
-					console.log(res[0], res[1])
-					words.push(<Word key={i} text={res[0]} owner={res[1]} bet={res[2]}
+					wordMap[i] = <Word key={i} text={res[0]} owner={res[1]} bet={res[2]}
 						contract={this.props.contract} account={this.props.account}
-						resolved={res[3]} verdict={res[4]} id_={i} updated={this.wordResolve.bind(this)} />)
-				}).catch(console.error).finally(() => this.setState({ words }))
+						resolved={res[3]} verdict={res[4]} id_={i} updated={this.wordResolve.bind(this)} />
+				}).catch(console.error).finally(() => {
+					// very bad approach I know but async/await was not working
+					let words = []
+					for (let i=num-1; i>=0; i--) {
+						if (i in wordMap){
+							words.push(wordMap[i])
+						}
+					}
+					this.setState({ words })
+				})
 			}
 		}).catch(console.error)
 	}
