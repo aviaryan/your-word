@@ -38,6 +38,11 @@ export default class Dashboard extends Component {
 		}).catch(console.error)
 	}
 
+	wordResolve() {
+		this.fetchWords()
+		this.props.updated()
+	}
+
 	fetchWords(){
 		if (!this.props.contract) {
 			return
@@ -48,7 +53,8 @@ export default class Dashboard extends Component {
 				this.props.contract.methods.getWordById(i).call().then(res => {
 					console.log(res[0], res[1])
 					words.push(<Word key={i} text={res[0]} owner={res[1]} bet={res[2]}
-						contract={this.props.contract} />)
+						contract={this.props.contract} account={this.props.account}
+						resolved={res[3]} verdict={res[4]} id_={i} updated={this.wordResolve.bind(this)} />)
 				}).catch(console.error).finally(() => this.setState({ words }))
 			}
 		}).catch(console.error)
@@ -57,6 +63,7 @@ export default class Dashboard extends Component {
 	nickEditFalse(){
 		this.setState({nickEdit: false})
 		this.loadNick()
+		this.fetchWords()
 	}
 
 	loadNick(){
@@ -76,7 +83,7 @@ export default class Dashboard extends Component {
 						<span className={styles.button} onClick={this.pledge.bind(this)}>DO IT!</span></p>
 					</div>
 					<div className={styles.transactions}>
-						<h2>Last Pledges</h2>
+						<h2>Recent Pledges</h2>
 						<div>{this.state.words}</div>
 					</div>
 				</div>
@@ -87,12 +94,16 @@ export default class Dashboard extends Component {
 							<NickEdit nick={this.state.nick} completed={this.nickEditFalse.bind(this)}
 								contract={this.props.contract} account={this.props.account} />
 							:
-							<p onClick={() => this.setState({nickEdit: true})} className={styles.nick}>{this.state.nick}</p>
+							<span onClick={() => this.setState({nickEdit: true})} className={styles.nick}>{this.state.nick}</span>
 						}</div>
 						:
 						<NickEdit contract={this.props.contract} account={this.props.account} />
 					}
-					{this.props.account}
+					<p className={styles.addrInfo}>
+						<a href={"https://rinkeby.etherscan.io/address/" + this.props.account}>
+							{this.props.account}
+						</a>
+					</p>
 				</div>
 			</div>
 		)

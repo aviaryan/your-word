@@ -3,4 +3,20 @@
 	padding: 0.5rem 0 0.5rem 0.5rem;
 	border: 1px solid gray;
 	width: calc(100% - 2rem);
+	display: flex;
+	flex-direction: row;
+}
+
+.content {
+	flex-grow: 100;
+}
+
+.status {
+	width: 140px;
+	text-align: right;
+	padding-right: 0.6rem;
+}
+
+.btn:hover {
+	cursor: pointer;
 }

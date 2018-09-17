@@ -21,7 +21,7 @@ export default class Intro extends Component {
 					4. Post a "word" and bet some money against it.
 				</p>
 				<p>
-					5. If done, mark it SUCCESS otherwise mark it failed.
+					5. If you manage to keep your word, mark it ✅  otherwise mark it ❌.
 				</p>
 			</div>
 		)

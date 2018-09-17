@@ -76,7 +76,7 @@ class App extends Component {
 				<div className={styles.container}>
 					<Router>
 						<Switch>
-							<Route exact path="/" render={(props) => <Dashboard {...this.state} />} />
+							<Route exact path="/" render={(props) => <Dashboard {...this.state} updated={this.fetchBalances.bind(this)} />} />
 							<Route exact path="/welcome" component={Intro} />
 						</Switch>
 					</Router>

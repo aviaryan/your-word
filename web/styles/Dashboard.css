@@ -46,3 +46,11 @@
 .nick:hover {
 	cursor: pointer;
 }
+
+.addrInfo {
+	word-wrap: break-word;
+}
+
+.addrInfo a {
+	color: inherit;
+}
