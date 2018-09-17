@@ -15,17 +15,17 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {connected: false, account: null, web3: null, contract: null,
-			cbal: 0.0, abal: 0.0, tbal: 0.0}
+			cbal: 0.0, abal: 0.0, tbal: 0.0, failed: false}
 	}
 
 	componentDidMount(){
-		if (!window.web3.currentProvider) {
-			return;
+		if (!window.web3 || !window.web3.currentProvider) {
+			return this.failed()
 		}
 		let web3 = new Web3(window.web3.currentProvider);
 		web3.eth.getAccounts().then(accounts => {
 			if (accounts.length < 1) {
-				return;
+				return this.failed()
 			}
 			// try connecting to contract
 			let contract = new web3.eth.Contract(abi, address, {
@@ -37,8 +37,19 @@ class App extends Component {
 			if (contract) {
 				this.setState({ connected: true, account: accounts[0], web3, contract })
 				this.fetchBalances()
+			} else {
+				this.failed()
 			}
-		}).catch(console.error)
+		}).catch(err => {
+			this.failed()
+			console.error(err)
+		})
+	}
+
+	failed() {
+		if (!window.location.href.endsWith('/help')){
+			window.location.href = '/help'
+		}
 	}
 
 	fetchBalances() {
@@ -66,18 +77,18 @@ class App extends Component {
 					<div className={styles.navSegment}>
 						{this.state.connected ?
 							<div className={styles.balanceItem}><p>👤 USER</p><small>{this.state.abal} ETH</small></div>
-							: <div className={styles.balanceItem}><p>"❌ DISCONNECTED"</p></div>}
+							: <div className={styles.balanceItem}><p title="Please connect to Rinkeby">❌ DISCONNECTED</p></div>}
 						{this.state.connected && <div className={styles.balanceItem}><p>🎩 ESCROW</p><small>{this.state.cbal} ETH</small></div>}
 						{this.state.connected && <div className={styles.balanceItem}><p>💎 TREASURE</p><small>{this.state.tbal} ETH</small></div>}
-						<div className={styles.balanceItem}><a href="/welcome">HELP</a></div>
+						<div className={styles.balanceItem}><a href="/help">HELP</a></div>
 					</div>
 				</nav>
 
 				<div className={styles.container}>
 					<Router>
 						<Switch>
-							<Route exact path="/" render={(props) => <Dashboard {...this.state} updated={this.fetchBalances.bind(this)} />} />
-							<Route exact path="/welcome" component={Intro} />
+							<Route exact path="/" render={() => <Dashboard {...this.state} updated={this.fetchBalances.bind(this)} />} />
+							<Route exact path="/help" component={Intro} />
 						</Switch>
 					</Router>
 				</div>

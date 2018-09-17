@@ -18,7 +18,7 @@ export default class Intro extends Component {
 					3. You should be able to see the balances on the <a href="/">home page</a> now.
 				</p>
 				<p>
-					4. Post a "word" and bet some money against it.
+					4. Give the blockchain your word and bet some money on it.
 				</p>
 				<p>
 					5. If you manage to keep your word, mark it ✅  otherwise mark it ❌.
