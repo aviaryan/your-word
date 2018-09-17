@@ -6,6 +6,23 @@ html, body, .app {
 	font-family: 'Roboto', sans-serif;
 }
 
+.loading {
+	position: fixed;
+	top: 0rem;
+	padding-top: 0.5rem;
+	width: 100%;
+	text-align: center;
+}
+
+.loading span {
+	padding: 0.5rem 0.5rem;
+	background: yellow;
+}
+
+.hidden {
+	display: none;
+}
+
 .container {
 	max-width: 1100px;
 	margin: 0 auto;

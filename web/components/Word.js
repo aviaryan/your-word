@@ -17,11 +17,16 @@ export default class Word extends Component {
 	}
 
 	resolve(status){
+		this.props.showLoading(true)
 		this.props.contract.methods.resolveWord(this.props.id_, status).send({
 			from: this.props.account
 		}).then(() => {
+			this.props.showLoading(false)
 			this.props.updated()
-		}).catch(console.error)
+		}).catch(err => {
+			this.props.showLoading(false)
+			console.error(err)
+		})
 	}
 
 	render() {

@@ -5,6 +5,7 @@ import styles from './../styles/NickEdit.css'
 export default class NickEdit extends Component {
 	save() {
 		const nick = document.getElementById('nick').value
+		this.props.showLoading(true)
 		this.props.contract.methods.setNick(nick).send({
 			from: this.props.account,
 			value: 1e18 * 0.001
@@ -13,7 +14,11 @@ export default class NickEdit extends Component {
 			if (this.props.completed) {
 				this.props.completed()
 			}
-		}).catch(console.error)
+			this.props.showLoading(false)
+		}).catch(err => {
+			this.props.showLoading(false)
+			console.error(err)
+		})
 	}
 
 	cancel() {

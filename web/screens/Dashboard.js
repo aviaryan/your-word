@@ -27,6 +27,7 @@ export default class Dashboard extends Component {
 		const text = document.getElementById('text').value
 		const value = document.getElementById('value').value
 		console.log(text, value)
+		this.props.showLoading(true)
 		this.props.contract.methods.addWord(text).send({
 			from: this.props.account,
 			value: 1e18 * value
@@ -34,8 +35,12 @@ export default class Dashboard extends Component {
 			console.log(rec.transactionHash)
 			document.getElementById('text').value = ''
 			document.getElementById('value').value = ''
+			this.props.showLoading(false)
 			this.updatePage()
-		}).catch(console.error)
+		}).catch(err => {
+			this.props.showLoading(false)
+			console.error(err)
+		})
 	}
 
 	updatePage() {
@@ -53,7 +58,8 @@ export default class Dashboard extends Component {
 				this.props.contract.methods.getWordById(i).call().then(res => {
 					wordMap[i] = <Word key={i} text={res[0]} owner={res[1]} bet={res[2]}
 						contract={this.props.contract} account={this.props.account}
-						resolved={res[3]} verdict={res[4]} id_={i} updated={this.updatePage.bind(this)} />
+						resolved={res[3]} verdict={res[4]} id_={i} updated={this.updatePage.bind(this)}
+						showLoading={this.props.showLoading} />
 				}).catch(console.error).finally(() => {
 					// very bad approach I know but async/await was not working
 					let words = []
@@ -100,12 +106,12 @@ export default class Dashboard extends Component {
 					{this.state.nick ?
 						<div>{this.state.nickEdit ?
 							<NickEdit nick={this.state.nick} completed={this.nickEditFalse.bind(this)}
-								contract={this.props.contract} account={this.props.account} />
+								contract={this.props.contract} account={this.props.account} showLoading={this.props.showLoading} />
 							:
 							<span onClick={() => this.setState({nickEdit: true})} className={styles.nick}>{this.state.nick}</span>
 						}</div>
 						:
-						<NickEdit contract={this.props.contract} account={this.props.account} />
+						<NickEdit contract={this.props.contract} account={this.props.account} showLoading={this.props.showLoading} />
 					}
 					<p className={styles.addrInfo}>
 						<a href={"https://rinkeby.etherscan.io/address/" + this.props.account}>

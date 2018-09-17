@@ -15,7 +15,7 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {connected: false, account: null, web3: null, contract: null,
-			cbal: 0.0, abal: 0.0, tbal: 0.0, failed: false}
+			cbal: 0.0, abal: 0.0, tbal: 0.0, failed: false, hideLoading: true}
 	}
 
 	componentDidMount(){
@@ -68,9 +68,14 @@ class App extends Component {
 		})
 	}
 
+	showLoading(val){
+		this.setState({hideLoading: !val})
+	}
+
 	render() {
 		return (
 			<div className={styles.app}>
+				<div className={[styles.loading, this.state.hideLoading ? styles.hidden : ''].join(' ')}><span>Loading...</span></div>
 				{/* navbar */}
 				<nav className={styles.navbar}>
 					<div className={styles.brand}><a href="/">YOUR WORD</a></div>
@@ -87,7 +92,8 @@ class App extends Component {
 				<div className={styles.container}>
 					<Router>
 						<Switch>
-							<Route exact path="/" render={() => <Dashboard {...this.state} updated={this.fetchBalances.bind(this)} />} />
+							<Route exact path="/" render={() => <Dashboard {...this.state}
+								updated={this.fetchBalances.bind(this)} showLoading={this.showLoading.bind(this)} />} />
 							<Route exact path="/help" component={Intro} />
 						</Switch>
 					</Router>

@@ -1,10 +1,12 @@
 .dash {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 }
 
 .left {
 	flex-basis: 70%;
+	max-width: 750px;
 }
 
 .right {
