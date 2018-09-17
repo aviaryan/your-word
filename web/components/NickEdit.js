@@ -16,11 +16,16 @@ export default class NickEdit extends Component {
 		}).catch(console.error)
 	}
 
+	cancel() {
+		this.props.completed()
+	}
+
 	render() {
 		return (
 			<p>
 				<input type="text" id="nick" placeholder="set nick (0.001 eth)" defaultValue={this.props.nick} />
 				<button className={styles.btn} onClick={this.save.bind(this)}>save</button>
+				{this.props.completed && <button className={styles.btn} onClick={this.cancel.bind(this)}>cancel</button>}
 			</p>
 		)
 	}
