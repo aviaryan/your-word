@@ -24,8 +24,8 @@ contract PromiseBox {
     uint private counter;
 
     // constants
-    // 0.001 eth
-    uint constant min_bet = 10**15;
+    // 0.01 eth
+    uint constant min_bet = 10**16;
     // 0.001 eth
     uint constant nick_price = 10**15;
 
@@ -54,13 +54,12 @@ contract PromiseBox {
         require(msg.sender == words[id].owner, "Incorrect owner for this word");
         words[id].resolved = true;
         words[id].verdict = verdict;
-        // TODO: return back value
         if (!verdict) {
-            msg.sender.transfer(words[id].bet / 100 * 20);
-            treasure.transfer(words[id].bet / 100 * 80);
+            msg.sender.transfer(words[id].bet / 100 * 50);
+            treasure.transfer(words[id].bet / 100 * 50);
         } else {
-            msg.sender.transfer(words[id].bet / 100 * 99);
-            treasure.transfer(words[id].bet / 100 * 1);
+            msg.sender.transfer(words[id].bet);
+            // treasure.transfer(words[id].bet / 100 * 1);
         }
     }
 

@@ -47,7 +47,7 @@ class App extends Component {
 					<a href="/">YOUR WORD</a>
 					<div className={styles.navSegment}>
 						<a>{this.state.connected ? "✅ CONNECTED" : "❌ DISCONNECTED"}</a>
-						<a href="/">PROFILE</a>
+						<a href="/welcome">HELP</a>
 					</div>
 				</nav>
 

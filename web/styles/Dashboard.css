@@ -9,6 +9,7 @@
 
 .right {
 	flex-basis: 30%;
+	max-width: 250px;
 }
 
 .transactions {
@@ -34,5 +35,14 @@
 }
 
 .button:hover {
+	cursor: pointer;
+}
+
+.nick {
+	border-bottom: 1px dotted gray;
+	display: inline-block;
+}
+
+.nick:hover {
 	cursor: pointer;
 }
