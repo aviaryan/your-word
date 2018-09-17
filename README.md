@@ -2,8 +2,8 @@
 
 https://word.aviaryan.com/
 
-Cement your promises in blockchain and bet some money against it.
-If you fail, you lose 50% of your bet, otherwise you get the 100% back.
+Store your promises in the blockchain and bet some money against it.
+If you fail, you lose 50% of your bet, otherwise you get 100% back.
 
 ![screenshot](https://i.imgur.com/Skru8bm.png)
 
