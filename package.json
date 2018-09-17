@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel web/static/index.html",
-    "build": "parcel build web/index.js",
-    "deploy:web": "surge dist/",
+    "build": "parcel build web/static/index.html",
+    "deploy:web": "npm run build && mv dist/index.html dist/200.html && surge dist/ word.aviaryan.com",
     "test": "node tests/test.js",
     "test:net": "TESTNET=true node tests/test.js",
     "deploy:testnet": "TESTNET=true node deploy.js",

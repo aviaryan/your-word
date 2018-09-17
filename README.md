@@ -1,26 +1,32 @@
 # My Word
 
-Cement your promises in blockchain.
-If you fail, you lose 20%, otherwise you get it back.
+Cement your promises in blockchain and bet some money against it.
+If you fail, you lose 50% of your bet, otherwise you get the 100% of amount back.
 
 
 ## Tech
 
 * Web3 v1.0 [[Docs](https://web3js.readthedocs.io/en/1.0/index.html)]
 * Solidity (solc)
+* React
 
 
 ## Development
 
+The development part of this project can be divided into 3 parts.
+
+1. Smart contract deployment (on local or test networks)
+2. Smart contract testing
+3. Web app development
+
+
+### 1. Smart contract deployment
+
+For deploying on Ganache (GUI version) local test network
+
 ```sh
-npm install -g ganache-cli
-ganache-cli
-# run the script
-npm run start
+npm run deploy:local
 ```
-
-
-## SC Deployment
 
 For deploying on Rinkeby testnet
 
@@ -29,17 +35,46 @@ For deploying on Rinkeby testnet
 npm run deploy:testnet
 ```
 
-For deploying on Ganache
+You will have to set up the keys in `.env` file.
+
+
+### 2. Smart contract testing
+
+Run the test script. The following command tests it against a local Ganache GUI network.
 
 ```sh
-npm run deploy:local
+npm run test
+```
+
+If you want to test it against the Rinkeby testnet, run the following command.
+
+```sh
+npm run test:net
 ```
 
 
-## Network
+### 3. Web app development
 
-I had a hard time deciding what network to use. I surely don't want to use the mainnet since it's just a demo app and I want people to try it. I want to, but can't use the popular testnets faucets to fill user's accounts with ether and it doesn't seem like "real".
-So I deployed my own network using ganache and a small server.
+```sh
+npm run start
+```
+
+
+## Building and Deployment
+
+Smart contract deployments have already been covered in the previous section.
+
+To deploy the web app, first build it
+
+```sh
+npm run build
+```
+
+Then deploy it on surge.sh.
+
+```sh
+npm run deploy:web
+```
 
 
 ## Resources
