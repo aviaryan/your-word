@@ -3,6 +3,8 @@
 Cement your promises in blockchain and bet some money against it.
 If you fail, you lose 50% of your bet, otherwise you get the 100% of amount back.
 
+![screenshot](https://i.imgur.com/uAuSSwb.png)
+
 
 ## Tech
 
