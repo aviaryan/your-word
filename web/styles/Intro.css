@@ -1,3 +1,9 @@
-.heading {
-	font-size: 58px;
+.help {
+	max-width: 800px;
+	margin: 2rem auto;
+	font-size: 1.2rem;
+}
+
+.help h1 {
+	font-size: 1.5rem;
 }
