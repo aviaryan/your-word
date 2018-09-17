@@ -6,7 +6,12 @@ export default class Word extends Component {
 	render() {
 		return (
 			<div className={styles.word}>
-				<h3>{this.props.text}</h3>
+				<p>
+					<b>I will</b> <span>{this.props.text}</span>
+				</p>
+				<p>
+					by <u>{this.props.owner}</u> for 0.05 eth.
+				</p>
 			</div>
 		)
 	}

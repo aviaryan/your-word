@@ -32,6 +32,7 @@ export default class Dashboard extends Component {
 			console.log(rec.transactionHash)
 			document.getElementById('text').value = ''
 			document.getElementById('value').value = ''
+			this.fetchWords()
 		}).catch(console.error)
 	}
 
@@ -61,7 +62,7 @@ export default class Dashboard extends Component {
 						<span className={styles.button} onClick={this.pledge.bind(this)}>DO IT!</span></p>
 					</div>
 					<div className={styles.transactions}>
-						<h2>Last Promises</h2>
+						<h2>Last Pledges</h2>
 						<div>{this.state.words}</div>
 					</div>
 				</div>
