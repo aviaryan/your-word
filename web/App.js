@@ -14,7 +14,8 @@ import Dashboard from './screens/Dashboard.js'
 class App extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {connected: false, account: null, web3: null, contract: null}
+		this.state = {connected: false, account: null, web3: null, contract: null,
+			cbal: 0.0, abal: 0.0, tbal: 0.0}
 	}
 
 	componentDidMount(){
@@ -35,8 +36,25 @@ class App extends Component {
 			// store state
 			if (contract) {
 				this.setState({ connected: true, account: accounts[0], web3, contract })
+				this.fetchBalances()
 			}
 		}).catch(console.error)
+	}
+
+	fetchBalances() {
+		this.state.web3.eth.getBalance(this.state.contract.options.address).then(
+			(wei) => this.setState({cbal: wei/1e18}))
+		this.fetchBalance(this.state.contract.options.address, 'cbal')
+		this.fetchBalance(this.state.account, 'abal')
+		this.fetchBalance('0xc308bb6D86f82C0Ed7bEFFcC3A265E26E705A9aa', 'tbal')
+	}
+
+	fetchBalance(address, key){
+		this.state.web3.eth.getBalance(address).then((wei) => {
+			let obj = {}
+			obj[key] = Math.round((wei / 1e18) * 100) / 100
+			this.setState(obj)
+		})
 	}
 
 	render() {
@@ -44,10 +62,14 @@ class App extends Component {
 			<div className={styles.app}>
 				{/* navbar */}
 				<nav className={styles.navbar}>
-					<a href="/">YOUR WORD</a>
+					<div className={styles.brand}><a href="/">YOUR WORD</a></div>
 					<div className={styles.navSegment}>
-						<a>{this.state.connected ? "✅ CONNECTED" : "❌ DISCONNECTED"}</a>
-						<a href="/welcome">HELP</a>
+						{this.state.connected ?
+							<div className={styles.balanceItem}><p>👤 USER</p><small>{this.state.abal} ETH</small></div>
+							: <div className={styles.balanceItem}><p>"❌ DISCONNECTED"</p></div>}
+						{this.state.connected && <div className={styles.balanceItem}><p>🎩 ESCROW</p><small>{this.state.cbal} ETH</small></div>}
+						{this.state.connected && <div className={styles.balanceItem}><p>💎 TREASURE</p><small>{this.state.tbal} ETH</small></div>}
+						<div className={styles.balanceItem}><a href="/welcome">HELP</a></div>
 					</div>
 				</nav>
 
@@ -56,12 +78,6 @@ class App extends Component {
 						<Switch>
 							<Route exact path="/" render={(props) => <Dashboard {...this.state} />} />
 							<Route exact path="/welcome" component={Intro} />
-							{/* <Route path="/resources" component={withTracker(Resources)} />
-							<Route path="/dashboard" component={withTracker(Authed)} />
-							<Route path="/profile" component={withTracker(Authed)} />
-							<Route path="/projects" component={withTracker(Authed)} />
-							<Route path="/@:username" component={withTracker(Authed)} />
-							<Route path="/p/:uid" component={withTracker(Authed)} /> */}
 						</Switch>
 					</Router>
 				</div>

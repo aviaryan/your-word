@@ -26,6 +26,30 @@ html, body, .app {
 	text-decoration: none;
 }
 
-.navSegment a {
+.navSegment {
 	margin: 0 0.5rem;
+	display: flex;
+	flex-direction: row;
+}
+
+.balanceItem {
+	display: flex;
+	flex-direction: column;
+	margin: 0 0.8rem;
+	justify-content: space-around;
+}
+
+.balanceItem p {
+	margin: 0;
+}
+
+.balanceItem small {
+	align-self: center;
+}
+
+.brand {
+	font-size: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 }
