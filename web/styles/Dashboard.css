@@ -1,0 +1,38 @@
+.dash {
+	display: flex;
+	flex-direction: row;
+}
+
+.left {
+	flex-basis: 70%;
+}
+
+.right {
+	flex-basis: 30%;
+}
+
+.transactions {
+	margin-top: 3rem;
+}
+
+.editBox {
+	padding: 0.5rem 0.5rem;
+	width: 100%;
+	max-width: 500px;
+}
+
+.price {
+	width: 3rem;
+	margin-right: 0.4rem;
+}
+
+.button {
+	background: #6e6e6e;
+	color: white;
+	padding: 0.5rem;
+	margin-left: 0.5rem;
+}
+
+.button:hover {
+	cursor: pointer;
+}

@@ -6,6 +6,12 @@ html, body, .app {
 	font-family: 'Roboto', sans-serif;
 }
 
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 2rem 0;
+}
+
 .navbar {
 	background: #4e4e4e;
 	color: white;

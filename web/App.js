@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import styles from './styles/App.css'
 import Web3 from 'web3';
+import {abi, address} from './lib/sc.js'
 // screens
 import Intro from './screens/Intro.js'
 import Dashboard from './screens/Dashboard.js'
@@ -13,7 +14,7 @@ import Dashboard from './screens/Dashboard.js'
 class App extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {connected: false}
+		this.state = {connected: false, account: null, web3: null, contract: null}
 	}
 
 	componentDidMount(){
@@ -22,8 +23,19 @@ class App extends Component {
 		}
 		let web3 = new Web3(window.web3.currentProvider);
 		web3.eth.getAccounts().then(accounts => {
-			console.log(accounts)
-			this.setState({connected: true})
+			if (accounts.length < 1) {
+				return;
+			}
+			// try connecting to contract
+			let contract = new web3.eth.Contract(abi, address, {
+				from: accounts[0],
+				gasPrice: '20000000000',
+				gas: 1500000, // gasPrice same as Ganache node
+			})
+			// store state
+			if (contract) {
+				this.setState({ connected: true, account: accounts[0], web3, contract })
+			}
 		}).catch(console.error)
 	}
 
@@ -35,22 +47,24 @@ class App extends Component {
 					<a href="/">YOUR WORD</a>
 					<div className={styles.navSegment}>
 						<a>{this.state.connected ? "✅ CONNECTED" : "❌ DISCONNECTED"}</a>
-						<a href="#">PROFILE</a>
+						<a href="/">PROFILE</a>
 					</div>
 				</nav>
 
-				<Router>
-					<Switch>
-						<Route exact path="/" component={Dashboard} />
-						<Route exact path="/welcome" component={Intro} />
-						{/* <Route path="/resources" component={withTracker(Resources)} />
-						<Route path="/dashboard" component={withTracker(Authed)} />
-						<Route path="/profile" component={withTracker(Authed)} />
-						<Route path="/projects" component={withTracker(Authed)} />
-						<Route path="/@:username" component={withTracker(Authed)} />
-						<Route path="/p/:uid" component={withTracker(Authed)} /> */}
-					</Switch>
-				</Router>
+				<div className={styles.container}>
+					<Router>
+						<Switch>
+							<Route exact path="/" render={(props) => <Dashboard {...this.state} />} />
+							<Route exact path="/welcome" component={Intro} />
+							{/* <Route path="/resources" component={withTracker(Resources)} />
+							<Route path="/dashboard" component={withTracker(Authed)} />
+							<Route path="/profile" component={withTracker(Authed)} />
+							<Route path="/projects" component={withTracker(Authed)} />
+							<Route path="/@:username" component={withTracker(Authed)} />
+							<Route path="/p/:uid" component={withTracker(Authed)} /> */}
+						</Switch>
+					</Router>
+				</div>
 			</div>
 		)
 	}
