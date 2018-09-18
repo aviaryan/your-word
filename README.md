@@ -3,7 +3,7 @@
 https://word.aviaryan.com/
 
 Store your promises in the blockchain and bet some money against it.
-If you fail, you lose 50% of your bet, otherwise you get 100% back.
+If you fail, you lose 50% of your bet, otherwise you get 100% back 🤣. Don't worry though, it runs on the Rinkeby testnet, so you won't be playing with any real money.
 
 ![screenshot](https://i.imgur.com/Skru8bm.png)
 
