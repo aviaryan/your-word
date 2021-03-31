@@ -3,7 +3,7 @@ const PrivateKeyProvider = require('truffle-privatekey-provider')
 
 function getWeb3() {
 	if (process.env.TESTNET) {
-		const url = 'https://rinkeby.infura.io/v3/' + process.env.INFURA_API_KEY
+		const url = 'https://rinkeby.infura.io/v3/' + process.env.INFURA_PROJECT_ID
 		const privateKey = process.env.PRIVATE_KEY
 		// console.log(url, privateKey)
 		return new Web3(new PrivateKeyProvider(privateKey, url))

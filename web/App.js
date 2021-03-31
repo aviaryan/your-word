@@ -70,7 +70,13 @@ class App extends Component {
 			.then((wei) => this.setState({ cbal: wei / 1e18 }))
 		this.fetchBalance(this.state.contract.options.address, 'cbal')
 		this.fetchBalance(this.state.account, 'abal')
-		this.fetchBalance('0xd66Fa012Ad00927c8E88bE4aD35eaCDeD59Df6f5', 'tbal')
+		// creator is the treasury
+		// TODO: handle this better
+		const creator =
+			address === '0xe9455EA9445133357B4bA71540891AC38557444C'
+				? '0xd66Fa012Ad00927c8E88bE4aD35eaCDeD59Df6f5' // local
+				: '0x66a53cdfc5c36f691a5816c070507a3b429ac115' // rinkeby
+		this.fetchBalance(creator, 'tbal')
 	}
 
 	fetchBalance(address, key) {

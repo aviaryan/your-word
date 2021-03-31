@@ -13,7 +13,7 @@ If you fail, you lose 50% of your bet, otherwise you get 100% back 🤣. Don't w
 
 ## Tech
 
-* Web3 v1.0 [[Docs](https://web3js.readthedocs.io/en/1.0/index.html)]
+* Web3
 * Solidity (solc)
 * React
 
@@ -43,7 +43,7 @@ For deploying on Rinkeby testnet
 npm run deploy:testnet
 ```
 
-You will have to set up the keys in `.env` file.
+You will have to set up the keys in `.env` file. Private key is private key of the address that is deploying and infura project ID is the project ID at Infura.
 
 
 ### 2. Smart contract testing
