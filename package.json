@@ -5,26 +5,31 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel web/static/index.html",
-    "build": "parcel build web/static/index.html",
-    "deploy:web": "npm run build && mv dist/index.html dist/200.html && surge dist/ word.aviaryan.com",
+    "build": "rm -rf dist/* && parcel build web/static/index.html",
+    "deploy:web": "npm run build && mv dist/index.html dist/200.html && cp .surgeignore dist/.surgeignore && surge dist/ word.aviaryan.com",
     "test": "node tests/test.js",
     "test:net": "TESTNET=true node tests/test.js",
     "deploy:testnet": "TESTNET=true node deploy.js",
-    "deploy:local": "node deploy.js"
+    "deploy:local": "node deploy.js",
+	"format": "prettier --write '**/*.js'"
   },
   "author": "Avi Aryan",
   "license": "ISC",
+  "browserslist": [
+    "since 2017-06"
+  ],
   "dependencies": {
     "autoprefixer": "^9.1.5",
     "postcss-modules": "^1.3.2",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-router-dom": "^4.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
     "solc": "^0.4.24",
-    "truffle-privatekey-provider": "^0.1.0",
-    "web3": "^1.0.0-beta.36"
+    "truffle-privatekey-provider": "^1.5.0",
+    "web3": "^1.3.4"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.9.7"
+    "parcel-bundler": "^1.12.5",
+    "prettier": "^2.2.1"
   }
 }
