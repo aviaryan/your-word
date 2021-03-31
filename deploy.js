@@ -31,6 +31,7 @@ async function start(){
 	console.log('hi')
 	let accounts = await web3.eth.getAccounts()
 	const treasure = accounts[0]
+	// treasure address is the deployer and also the treasury address
 	let deployedContract = await deploy(treasure, web3);
 	console.log(deployedContract);
 }

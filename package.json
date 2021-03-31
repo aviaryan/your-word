@@ -14,17 +14,20 @@
   },
   "author": "Avi Aryan",
   "license": "ISC",
+  "browserslist": [
+    "since 2017-06"
+  ],
   "dependencies": {
     "autoprefixer": "^9.1.5",
     "postcss-modules": "^1.3.2",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-router-dom": "^4.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
     "solc": "^0.4.24",
-    "truffle-privatekey-provider": "^0.1.0",
-    "web3": "^1.0.0-beta.36"
+    "truffle-privatekey-provider": "^1.5.0",
+    "web3": "^1.3.4"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.9.7"
+    "parcel-bundler": "^1.12.5"
   }
 }

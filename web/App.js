@@ -18,12 +18,19 @@ class App extends Component {
 			cbal: 0.0, abal: 0.0, tbal: 0.0, failed: false, hideLoading: true}
 	}
 
-	componentDidMount(){
-		if (!window.web3 || !window.web3.currentProvider) {
+	async componentDidMount(){
+		if (!window.ethereum) {
+			console.log('no eth injected');
 			return this.failed()
 		}
-		let web3 = new Web3(window.web3.currentProvider);
-		web3.eth.getAccounts().then(accounts => {
+		let web3 = new Web3(Web3.givenProvider)
+
+		try {
+			// thanks to https://ethereum.stackexchange.com/questions/62981/
+			// for web3 v1 connection information
+			await ethereum.enable()
+			const accounts = await web3.eth.getAccounts()
+			console.log(accounts)
 			if (accounts.length < 1) {
 				return this.failed()
 			}
@@ -40,10 +47,10 @@ class App extends Component {
 			} else {
 				this.failed()
 			}
-		}).catch(err => {
+		} catch (err) {
 			this.failed()
 			console.error(err)
-		})
+		}
 	}
 
 	failed() {
@@ -57,7 +64,7 @@ class App extends Component {
 			(wei) => this.setState({cbal: wei/1e18}))
 		this.fetchBalance(this.state.contract.options.address, 'cbal')
 		this.fetchBalance(this.state.account, 'abal')
-		this.fetchBalance('0xc308bb6D86f82C0Ed7bEFFcC3A265E26E705A9aa', 'tbal')
+		this.fetchBalance('0xd66Fa012Ad00927c8E88bE4aD35eaCDeD59Df6f5', 'tbal')
 	}
 
 	fetchBalance(address, key){
