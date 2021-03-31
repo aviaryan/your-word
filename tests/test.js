@@ -14,39 +14,60 @@ async function getAccounts() {
 		gas: 1500000, // gasPrice same as Ganache node
 	})
 
-	contract.methods.addWord('I am the man who will become the king of the pirates').send({
-		from: someUser,
-		value: '1000000000000000000'
-	}).then(receipt => {
-		// console.log(receipt)
-		// tests resolution of word
-		contract.methods.getWordById(0).call().then(res => {
-			console.log(res)
-			contract.methods.resolveWord(0, false).send({
-				from: someUser
-			}).then(receipt => {
-				contract.methods.getContractBalance().call().then(res => {
-					console.log('balance new:' + res)
-				})
-			})
-		})
-		// tests setting of name
-		contract.methods.setNick('luffy').send({
+	contract.methods
+		.addWord('I am the man who will become the king of the pirates')
+		.send({
 			from: someUser,
-			value: '1000000000000000'
-		}).then(() => {
-			contract.methods.getNickByAddress(someUser).call().then(res => {
-				console.log('nick ' + res)
-			})
+			value: '1000000000000000000',
 		})
-		// tests getting contract balance
-		contract.methods.getContractBalance().call().then(res => {
-			console.log('balance:' + res)
+		.then((receipt) => {
+			// console.log(receipt)
+			// tests resolution of word
+			contract.methods
+				.getWordById(0)
+				.call()
+				.then((res) => {
+					console.log(res)
+					contract.methods
+						.resolveWord(0, false)
+						.send({
+							from: someUser,
+						})
+						.then((receipt) => {
+							contract.methods
+								.getContractBalance()
+								.call()
+								.then((res) => {
+									console.log('balance new:' + res)
+								})
+						})
+				})
+			// tests setting of name
+			contract.methods
+				.setNick('luffy')
+				.send({
+					from: someUser,
+					value: '1000000000000000',
+				})
+				.then(() => {
+					contract.methods
+						.getNickByAddress(someUser)
+						.call()
+						.then((res) => {
+							console.log('nick ' + res)
+						})
+				})
+			// tests getting contract balance
+			contract.methods
+				.getContractBalance()
+				.call()
+				.then((res) => {
+					console.log('balance:' + res)
+				})
+			// test creating a new account
+			// web3.eth.personal.newAccount('!@superpassword')
+			// 	.then(console.log);
 		})
-		// test creating a new account
-		// web3.eth.personal.newAccount('!@superpassword')
-		// 	.then(console.log);
-	})
 }
 
-getAccounts();
+getAccounts()

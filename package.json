@@ -10,7 +10,8 @@
     "test": "node tests/test.js",
     "test:net": "TESTNET=true node tests/test.js",
     "deploy:testnet": "TESTNET=true node deploy.js",
-    "deploy:local": "node deploy.js"
+    "deploy:local": "node deploy.js",
+	"format": "prettier --write '**/*.js'"
   },
   "author": "Avi Aryan",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "web3": "^1.3.4"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "prettier": "^2.2.1"
   }
 }
