@@ -1,11 +1,11 @@
 const web3 = require('./lib.js').getWeb3()
-const abi = require('./abi.js')
-const address = '0x48a83c76FA6BA7Db77373f73E5f0CfD6b812A19D'
+const { abi, address } = require('./../web/lib/sc_local')
+// const address = '0x48a83c76FA6BA7Db77373f73E5f0CfD6b812A19D'
 // const address = '0x226d2FF354af955a7aa1A66E57D739625f7C6135'
 
 async function getAccounts() {
 	let accounts = await web3.eth.getAccounts()
-	console.log(accounts)
+	// console.log(accounts)
 	const someUser = accounts[0]
 
 	let contract = new web3.eth.Contract(abi, address, {
@@ -14,60 +14,65 @@ async function getAccounts() {
 		gas: 1500000, // gasPrice same as Ganache node
 	})
 
-	contract.methods
+	const addWordReceipt = await contract.methods
 		.addWord('I am the man who will become the king of the pirates')
 		.send({
 			from: someUser,
 			value: '1000000000000000000',
 		})
-		.then((receipt) => {
-			// console.log(receipt)
-			// tests resolution of word
+	console.log(addWordReceipt)
+
+	const totalWords = await contract.methods.getTotalWords().call()
+
+	console.log(totalWords)
+	const createdWordId = totalWords - 1;
+
+	// tests resolution of word
+	contract.methods
+		.getWordById(createdWordId)
+		.call()
+		.then((res) => {
+			console.log(res)
 			contract.methods
-				.getWordById(0)
-				.call()
-				.then((res) => {
-					console.log(res)
-					contract.methods
-						.resolveWord(0, false)
-						.send({
-							from: someUser,
-						})
-						.then((receipt) => {
-							contract.methods
-								.getContractBalance()
-								.call()
-								.then((res) => {
-									console.log('balance new:' + res)
-								})
-						})
-				})
-			// tests setting of name
-			contract.methods
-				.setNick('luffy')
+				.resolveWord(createdWordId, false)
 				.send({
 					from: someUser,
-					value: '1000000000000000',
 				})
-				.then(() => {
+				.then((receipt) => {
 					contract.methods
-						.getNickByAddress(someUser)
+						.getContractBalance()
 						.call()
 						.then((res) => {
-							console.log('nick ' + res)
+							console.log('balance new:' + res)
 						})
 				})
-			// tests getting contract balance
+		})
+	// tests setting of name
+	contract.methods
+		.setNick('luffy')
+		.send({
+			from: someUser,
+			value: '1000000000000000',
+		})
+		.then(() => {
 			contract.methods
-				.getContractBalance()
+				.getNickByAddress(someUser)
 				.call()
 				.then((res) => {
-					console.log('balance:' + res)
+					console.log('nick ' + res)
 				})
-			// test creating a new account
-			// web3.eth.personal.newAccount('!@superpassword')
-			// 	.then(console.log);
 		})
+	// tests getting contract balance
+	contract.methods
+		.getContractBalance()
+		.call()
+		.then((res) => {
+			console.log('balance:' + res)
+		})
+	// test creating a new account
+	// web3.eth.personal.newAccount('!@superpassword')
+	// 	.then(console.log);
+	// })
 }
 
 getAccounts()
