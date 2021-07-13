@@ -72,10 +72,11 @@ class App extends Component {
 		this.fetchBalance(this.state.account, 'abal')
 		// creator is the treasury
 		// TODO: handle this better
+		// using parcel's production handling
 		const creator =
-			address === '0xe9455EA9445133357B4bA71540891AC38557444C'
-				? '0xd66Fa012Ad00927c8E88bE4aD35eaCDeD59Df6f5' // local
-				: '0x66a53cdfc5c36f691a5816c070507a3b429ac115' // rinkeby
+			process.env.NODE_ENV !== 'production'
+				? '0xd66Fa012Ad00927c8E88bE4aD35eaCDeD59Df6f5' // local deployer
+				: '0x66a53cdfc5c36f691a5816c070507a3b429ac115' // rinkeby deployer
 		this.fetchBalance(creator, 'tbal')
 	}
 

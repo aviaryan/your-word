@@ -1,5 +1,5 @@
 const web3 = require('./lib.js').getWeb3()
-const { abi, address } = require('./../web/lib/sc_local')
+const { abi, address } = require('./../web/lib/sc')
 // const address = '0x48a83c76FA6BA7Db77373f73E5f0CfD6b812A19D'
 // const address = '0x226d2FF354af955a7aa1A66E57D739625f7C6135'
 
@@ -25,7 +25,7 @@ async function getAccounts() {
 	const totalWords = await contract.methods.getTotalWords().call()
 
 	console.log(totalWords)
-	const createdWordId = totalWords - 1;
+	const createdWordId = totalWords - 1
 
 	// tests resolution of word
 	contract.methods
