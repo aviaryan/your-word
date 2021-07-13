@@ -1,41 +1,9 @@
-const Web3 = require('web3')
-const contract = require('./compile.js')
-const getWeb3 = require('./lib/getWeb3').getWeb3
-
-function deploy(treasure, web3) {
-	const abiDefinition = JSON.parse(contract.interface)
-	console.log(contract.interface)
-	// print ABI
-	const WordsContract = new web3.eth.Contract(abiDefinition, null, {
-		gas: 1500000, // gasPrice same as Ganache node
-		gasPrice: '20000000000',
-	})
-
-	const byteCode = contract.bytecode
-
-	return new Promise((resolve, reject) => {
-		WordsContract.deploy({
-			data: byteCode,
-			arguments: [treasure],
-		})
-			.send({
-				from: treasure,
-			})
-			.then((deployedContract) => {
-				resolve(deployedContract.options.address)
-			})
-			.catch(reject)
-	})
-}
+const { deploy } = require('./lib/deployer')
 
 async function start() {
-	web3 = getWeb3()
-	console.log('hi')
-	let accounts = await web3.eth.getAccounts()
-	const treasure = accounts[0]
-	// treasure address is the deployer and also the treasury address
-	let deployedContract = await deploy(treasure, web3)
-	console.log(deployedContract)
+	const [address, abi] = await deploy()
+	console.log(JSON.stringify(abi))
+	console.log(address)
 }
 
 start()
