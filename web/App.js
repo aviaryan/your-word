@@ -71,7 +71,6 @@ class App extends Component {
 		this.fetchBalance(this.state.contract.options.address, 'cbal')
 		this.fetchBalance(this.state.account, 'abal')
 		// creator is the treasury
-		// TODO: handle this better
 		// using parcel's production handling
 		const creator =
 			process.env.NODE_ENV !== 'production'
