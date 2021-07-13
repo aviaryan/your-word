@@ -78,7 +78,7 @@ async function getAccounts() {
 
 async function getAddressAndAbi() {
 	if (process.env.TESTING) {
-		const [address, abi] = await deploy()
+		const [address, abi] = await deploy(web3)
 		return [address, abi]
 	} else {
 		return [address, abi]
