@@ -1,6 +1,6 @@
 const Web3 = require('web3')
 const contract = require('./compile.js')
-const getWeb3 = require('./tests/lib').getWeb3
+const getWeb3 = require('./lib/getWeb3').getWeb3
 
 function deploy(treasure, web3) {
 	const abiDefinition = JSON.parse(contract.interface)

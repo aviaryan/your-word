@@ -1,4 +1,4 @@
-const web3 = require('./lib.js').getWeb3()
+const web3 = require('../lib/getWeb3.js').getWeb3()
 const { abi, address } = require('./../web/lib/sc')
 // const address = '0x48a83c76FA6BA7Db77373f73E5f0CfD6b812A19D'
 // const address = '0x226d2FF354af955a7aa1A66E57D739625f7C6135'
