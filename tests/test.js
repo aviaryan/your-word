@@ -1,17 +1,18 @@
 const web3 = require('../lib/getWeb3.js').getWeb3()
 const { abi, address } = require('./../web/lib/sc')
-// const address = '0x48a83c76FA6BA7Db77373f73E5f0CfD6b812A19D'
-// const address = '0x226d2FF354af955a7aa1A66E57D739625f7C6135'
+const { deploy } = require('../lib/deployer')
 
 async function getAccounts() {
+	const [address, abi] = await getAddressAndAbi()
+
 	let accounts = await web3.eth.getAccounts()
 	// console.log(accounts)
 	const someUser = accounts[0]
 
 	let contract = new web3.eth.Contract(abi, address, {
 		from: someUser,
-		gasPrice: '20000000000',
-		gas: 1500000, // gasPrice same as Ganache node
+		gasPrice: '20000000000', // gasPrice same as Ganache node and ganache cli
+		gas: 6721975, // gas limit increased to ganache-cli default 0x6691b7
 	})
 
 	const addWordReceipt = await contract.methods
@@ -73,6 +74,15 @@ async function getAccounts() {
 	// web3.eth.personal.newAccount('!@superpassword')
 	// 	.then(console.log);
 	// })
+}
+
+async function getAddressAndAbi() {
+	if (process.env.TESTING) {
+		const [address, abi] = await deploy()
+		return [address, abi]
+	} else {
+		return [address, abi]
+	}
 }
 
 getAccounts()
