@@ -18,7 +18,7 @@ async function getAccounts() {
 		.addWord('I am the man who will become the king of the pirates')
 		.send({
 			from: someUser,
-			value: '1000000000000000000',
+			value: web3.utils.toWei('0.1'),
 		})
 	console.log(addWordReceipt)
 
@@ -52,7 +52,7 @@ async function getAccounts() {
 		.setNick('luffy')
 		.send({
 			from: someUser,
-			value: '1000000000000000',
+			value: web3.utils.toWei('0.001'),
 		})
 		.then(() => {
 			contract.methods
