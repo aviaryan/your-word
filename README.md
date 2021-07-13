@@ -1,5 +1,7 @@
 # Your Word
 
+[![Testing CI](https://github.com/aviaryan/your-word/actions/workflows/ci.yml/badge.svg)](https://github.com/aviaryan/your-word/actions/workflows/ci.yml)
+
 https://word.aviaryan.com/
 
 Store your promises in the blockchain and bet some money against it.
