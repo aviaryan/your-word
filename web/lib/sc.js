@@ -2,6 +2,7 @@ const { abi, address } = require('./sc_local')
 const { abi_t, address_t } = require('./sc_testnet')
 
 // using parcel's environment var
+// https://parceljs.org/production.html
 const isLocal = process.env.NODE_ENV !== 'production'
 
 const contract = {
