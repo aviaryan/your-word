@@ -78,4 +78,16 @@ describe('PromiseBox', () => {
 		expect(await wallet.getBalance()).to.be.gt(balance)
 		expect(await wallet2.getBalance()).to.be.lt(balance2)
 	})
+
+	it('Word with 0 length is not created', async () => {
+		// https://ethereum-waffle.readthedocs.io/en/latest/matchers.html#revert-with-message
+		await expect(
+			contract.addWord(
+				'',
+				(overrides = {
+					value: Web3.utils.toWei('1'),
+				})
+			)
+		).to.be.revertedWith('Text cannot be empty')
+	})
 })

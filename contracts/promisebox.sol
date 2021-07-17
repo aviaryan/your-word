@@ -1,4 +1,5 @@
-pragma solidity ^0.4.18;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.6;
 
 contract PromiseBox {
     // this struct represents each Word
@@ -18,7 +19,7 @@ contract PromiseBox {
     mapping (uint => Word) public words;
 
     // treasure address
-    address private treasure;
+    address payable private treasure;
 
     // identifier for words
     uint private counter;
@@ -30,15 +31,15 @@ contract PromiseBox {
     uint constant nick_price = 10**15;
 
     // constructor, saves private information for the contract
-    constructor(address treasure_) public {
+    constructor(address payable treasure_) {
         treasure = treasure_;
         counter = 0;
     }
 
     /// Save your word to the blockchain
-    function addWord(string text) public payable {
+    function addWord(string memory text) public payable {
         require(msg.value >= min_bet, "Bet should be more than 0.001 eth");
-        require(utfStringLength(text) > 0, "Text cannot be empty");
+        require(bytes(text).length > 0, "Text cannot be empty");
         words[getID()] = Word({
             text: text,
             bet: msg.value,
@@ -55,29 +56,29 @@ contract PromiseBox {
         words[id].resolved = true;
         words[id].verdict = verdict;
         if (!verdict) {
-            msg.sender.transfer(words[id].bet / 100 * 50);
+            payable(msg.sender).transfer(words[id].bet / 100 * 50);
             treasure.transfer(words[id].bet / 100 * 50);
         } else {
-            msg.sender.transfer(words[id].bet);
+            payable(msg.sender).transfer(words[id].bet);
             // treasure.transfer(words[id].bet / 100 * 1);
         }
     }
 
     /// Set a nickname for yourself
-    function setNick(string name) public payable {
+    function setNick(string memory name) public payable {
         require(msg.value >= nick_price, "Insufficient fees for setting nick");
-        require(utfStringLength(name) > 0, "Name cannot be empty");
+        require(bytes(name).length > 0, "Name cannot be empty");
         names[msg.sender] = name;
         treasure.transfer(msg.value);
     }
 
     /// Return nickname given the address
-    function getNickByAddress(address ad) public view returns(string) {
+    function getNickByAddress(address ad) public view returns(string memory) {
         return names[ad];
     }
 
     /// Returns word by a given ID
-    function getWordById(uint id) public view returns(string, address, uint, bool, bool) {
+    function getWordById(uint id) public view returns(string memory, address, uint, bool, bool) {
         Word memory word = words[id];
         return (word.text, word.owner, word.bet, word.resolved, word.verdict);
     }
@@ -95,28 +96,5 @@ contract PromiseBox {
     // private functions
     function getID() private returns(uint) {
         return counter++;
-    }
-
-    /* HELPERS */
-    // https://ethereum.stackexchange.com/questions/13862/
-    function utfStringLength(string str) internal pure returns (uint) {
-        uint i = 0;
-        uint length = 0;
-        bytes memory string_rep = bytes(str);
-        while (i<string_rep.length) {
-            if (string_rep[i]>>7==0)
-                i += 1;
-            else if (string_rep[i]>>5==0x6)
-                i += 2;
-            else if (string_rep[i]>>4==0xE)
-                i += 3;
-            else if (string_rep[i]>>3==0x1E)
-                i += 4;
-            else
-                //For safety
-                i += 1;
-            length++;
-        }
-        return length;
     }
 }
