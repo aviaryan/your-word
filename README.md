@@ -50,18 +50,13 @@ You will have to set up the keys in `.env` file. Private key is private key of t
 
 ### 2. Smart contract testing
 
-Run the test script. The following command tests it against a local Ganache GUI network.
+Run the test script. The following command run tests on the smart contract using Waffle.
 
 ```sh
-npm run test
+npm run build:waffle
+# ^ build if smart contract changes or not built already
+npm test
 ```
-
-If you want to test it against the Rinkeby testnet, run the following command.
-
-```sh
-npm run test:net
-```
-
 
 ### 3. Web app development
 
