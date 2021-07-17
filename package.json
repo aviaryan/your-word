@@ -13,7 +13,9 @@
     "test:testweb3": "node tests/testTestWeb3.js",
     "deploy:testnet": "TESTNET=true node deploy.js",
     "deploy:local": "node deploy.js",
-    "format": "prettier --write '**/*.js'"
+    "format": "prettier --write '**/*.js'",
+    "build:waffle": "waffle",
+    "test:waffle": "export NODE_ENV=test && mocha"
   },
   "author": "Avi Aryan",
   "license": "ISC",
@@ -31,7 +33,10 @@
     "web3": "^1.3.4"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
     "ganache-cli": "^6.12.2",
+    "mocha": "^9.0.2",
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.2.1"
   }
