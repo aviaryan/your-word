@@ -6,16 +6,12 @@
   "scripts": {
     "start": "parcel web/static/index.html",
     "build": "rm -rf dist/* && parcel build web/static/index.html",
+    "test": "export NODE_ENV=test && mocha",
     "deploy:web": "npm run build && mv dist/index.html dist/200.html && cp .surgeignore dist/.surgeignore && surge dist/ word.aviaryan.com",
-    "test": "TESTING=true node tests/test.js",
-    "test:local": "node tests/test.js",
-    "test:net": "TESTNET=true node tests/test.js",
-    "test:testweb3": "node tests/testTestWeb3.js",
     "deploy:testnet": "TESTNET=true node deploy.js",
     "deploy:local": "node deploy.js",
     "format": "prettier --write '**/*.js'",
-    "build:waffle": "waffle",
-    "test:waffle": "export NODE_ENV=test && mocha"
+    "build:waffle": "waffle"
   },
   "author": "Avi Aryan",
   "license": "ISC",
@@ -35,7 +31,6 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
-    "ganache-cli": "^6.12.2",
     "mocha": "^9.0.2",
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.2.1"
