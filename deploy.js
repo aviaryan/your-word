@@ -6,6 +6,7 @@ async function start() {
 	const [address, abi] = await deploy(web3)
 	console.log(JSON.stringify(abi))
 	console.log(address)
+	// copy these to lib/sc_* files
 }
 
 start()

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styles from './../styles/Dashboard.css'
-import { setTimeout } from 'timers'
 import Word from '../components/Word'
 import NickEdit from '../components/NickEdit'
 

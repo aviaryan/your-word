@@ -102,6 +102,6 @@ const ji = [
 	},
 ]
 
-const address = '0xb3C2a60d25973e6F183CdCAe0247A4da03751863'
+const address = '0x8c19c8E8BE5d108c365680d2e59EF13A123DDe29'
 
 module.exports = { abi: ji, address }
