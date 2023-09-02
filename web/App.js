@@ -74,7 +74,7 @@ class App extends Component {
 		// using parcel's production handling
 		const creator =
 			process.env.NODE_ENV !== 'production'
-				? '0xd66Fa012Ad00927c8E88bE4aD35eaCDeD59Df6f5' // local deployer
+				? '0x041D5b3Ce06280c3fa2E4Ed31Eedd8c238dA3484' // local deployer
 				: '0x66a53cdfc5c36f691a5816c070507a3b429ac115' // rinkeby deployer
 		this.fetchBalance(creator, 'tbal')
 	}
